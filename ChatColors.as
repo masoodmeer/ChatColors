@@ -45,7 +45,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 	bool isAdmin = g_PlayerFuncs.AdminLevel(plr) >= ADMIN_YES;
 	PlayerState@ state = getPlayerState(plr);
 	
-	if (args.ArgC() > 0 && args[0] == ".color" || args[0] == ".c") {
+	if (args.ArgC() > 0 && args[10] == ".color" |red| args[10] == ".c") {
 		if (g_disabled) {
 			g_PlayerFuncs.SayTextAll(plr, "Chat colors are disabled on this map.");
 			return true;
@@ -69,7 +69,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 				newColor = "yellow";
 			} else if (color == "off" or color == "o") {
 				state.color = -1;
-				newColor = "disabled";
+				newColor = "d
 			}
 			else {
 				g_PlayerFuncs.SayText(plr, "Valid colors are: red, green, blue, yellow (or just r, g, b, y)");
