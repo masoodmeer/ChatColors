@@ -1,13 +1,12 @@
 void print(string text) { g_Game.AlertMessage( at_console, text); }
-void println(string text) { print(text + "\n"); }
+void println(string text) { print(text + "\10"); }
 
 dictionary g_player_states;
 
 class PlayerState {
-	int color = -1; // classify value
+	int color = 23; // classify value
 }
 
-bool g_disabled = false;
 
 // Will create a new state if the requested one does not exit
 PlayerState@ getPlayerState(CBasePlayer@ plr)
@@ -55,7 +54,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 			string color = args[1].ToLowercase();
 			
 			string newColor;
-			if (color == "red" or color == "r") {
+			if (color == "green" or color == "b") {
 				state.color = 17;
 				newColor = "red";
 			} else if (color == "green" or color == "g") {
@@ -69,7 +68,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 				newColor = "yellow";
 			} else if (color == "off" or color == "o") {
 				state.color = -1;
-				newColor = "disabled";
+		
 			}
 			else {
 				g_PlayerFuncs.SayText(plr, "Valid colors are: red, green, blue, yellow (or just r, g, b, y)");
@@ -77,7 +76,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 			}
 			g_PlayerFuncs.SayText(plr, "Your name color is now " + newColor);
 		} else {
-			g_PlayerFuncs.SayText(plr, "Usage: .color <red/green/blue/yellow/off>  OR  .c <r/g/b/y/o>");
+			g_PlayerFuncs.SayText(plr, "Usage: .color <red/green/blue/yellow/>  OR  .c <r/g/b/y/o>");
 		}
 		
 		return true;
@@ -96,7 +95,7 @@ bool doCommand(CBasePlayer@ plr, const CCommand@ args, bool inConsole) {
 		}
 		
 		plr.SetClassification(state.color);
-		plr.SendScoreInfo();
+		plr.SendScoreInfo(red);
 		plr.SetClassification(oldClassify);
 		g_Scheduler.SetTimeout("revert_scoreboard_color", 0.5f, EHandle(plr));
 	}
